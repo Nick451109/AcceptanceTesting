@@ -23,6 +23,14 @@ Feature: To-Do List Management
     When the user marks task "Buy groceries" as completed
     Then the to-do list should show task "Buy groceries" as completed
 
+  Scenario: Edit a task in the to-do list
+    Given the to-do list contains tasks:
+      | Task         |
+      | Buy groceries|
+      | Pay bills    |
+    When the user edits task "Buy groceries" to "Buy food"
+    Then the to-do list should show task "Buy food" instead of "Buy groceries"
+
   Scenario: Clear the entire to-do list
     Given the to-do list contains tasks:
       | Task         |

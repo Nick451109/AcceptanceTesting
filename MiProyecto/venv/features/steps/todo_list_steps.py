@@ -33,7 +33,6 @@ def step_impl(context):
 
 @when('the user marks task "{task}" as completed')
 def step_impl(context, task):
-    # Find the task number by task name
     task_number = next((i + 1 for i, t in enumerate(context.todo.list_tasks()) if t['task'] == task), None)
     if task_number is not None:
         context.todo.mark_task_completed(task_number)
@@ -53,3 +52,17 @@ def step_impl(context):
 @then('the to-do list should be empty')
 def step_impl(context):
     assert context.todo.list_tasks() == [], "Expected the to-do list to be empty."
+
+@when('the user edits task "{old_task}" to "{new_task}"')
+def step_impl(context, old_task, new_task):
+    task_number = next((i + 1 for i, t in enumerate(context.todo.list_tasks()) if t['task'] == old_task), None)
+    if task_number is not None:
+        context.todo.edit_task(task_number, new_task)
+    else:
+        raise AssertionError(f"Task '{old_task}' not found in the to-do list.")
+
+@then('the to-do list should show task "{new_task}" instead of "{old_task}"')
+def step_impl(context, old_task, new_task):
+    tasks = [t['task'] for t in context.todo.list_tasks()]
+    assert new_task in tasks, f"Expected task '{new_task}' not found in the to-do list."
+    assert old_task not in tasks, f"Task '{old_task}' should have been renamed."
