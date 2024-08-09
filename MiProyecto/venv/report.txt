@@ -1,0 +1,45 @@
+Feature: To-Do List Management # features/todo_list.feature:1
+
+  Scenario: Add a task to the to-do list               # features/todo_list.feature:3
+    Given the to-do list is empty                      # features/steps/todo_list_steps.py:4
+    When the user adds a task "Buy groceries"          # features/steps/todo_list_steps.py:8
+    Then the to-do list should contain "Buy groceries" # features/steps/todo_list_steps.py:12
+
+  Scenario: List all tasks in the to-do list  # features/todo_list.feature:8
+    Given the to-do list contains tasks       # features/steps/todo_list_steps.py:17
+      | Task          |
+      | Buy groceries |
+      | Pay bills     |
+    When the user lists all tasks             # features/steps/todo_list_steps.py:23
+    Then the output should contain            # features/steps/todo_list_steps.py:27
+      | Tasks         |
+      | Buy groceries |
+      | Pay bills     |
+
+  Scenario: Mark a task as completed                                  # features/todo_list.feature:19
+    Given the to-do list contains tasks                               # features/steps/todo_list_steps.py:17
+      | Task          | Status  |
+      | Buy groceries | Pending |
+    When the user marks task "Buy groceries" as completed             # features/steps/todo_list_steps.py:34
+    Then the to-do list should show task "Buy groceries" as completed # features/steps/todo_list_steps.py:42
+
+  Scenario: Edit a task in the to-do list                                      # features/todo_list.feature:26
+    Given the to-do list contains tasks                                        # features/steps/todo_list_steps.py:17
+      | Task          |
+      | Buy groceries |
+      | Pay bills     |
+    When the user edits task "Buy groceries" to "Buy food"                     # features/steps/todo_list_steps.py:56
+    Then the to-do list should show task "Buy food" instead of "Buy groceries" # features/steps/todo_list_steps.py:64
+
+  Scenario: Clear the entire to-do list  # features/todo_list.feature:34
+    Given the to-do list contains tasks  # features/steps/todo_list_steps.py:17
+      | Task          |
+      | Buy groceries |
+      | Pay bills     |
+    When the user clears the to-do list  # features/steps/todo_list_steps.py:48
+    Then the to-do list should be empty  # features/steps/todo_list_steps.py:52
+
+1 feature passed, 0 failed, 0 skipped
+5 scenarios passed, 0 failed, 0 skipped
+15 steps passed, 0 failed, 0 skipped, 0 undefined
+Took 0m0.001s
