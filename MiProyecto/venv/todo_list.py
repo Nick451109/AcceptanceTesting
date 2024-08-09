@@ -12,6 +12,7 @@ class ToDoList:
             for index, task in enumerate(self.tasks, start=1):
                 status = task["status"]
                 print(f"{index}. {task['task']} - {status}")
+        return self.tasks  # Asegúrate de devolver la lista de tareas
 
     def mark_task_completed(self, task_number):
         if 0 < task_number <= len(self.tasks):
